@@ -1,27 +1,28 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+  <div class="py-5 container">
+    <List />
+    <Paginate />
+  </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import HelloWorld from './components/HelloWorld.vue';
+import { defineComponent, provide } from 'vue';
+
+import List from '@/components/List.vue';
+import Paginate from '@/components/Paginate.vue';
+
+import PaginationKey from '@/store/pagination/use-pagination-key';
+import usePagination from '@/store/pagination/use-pagination';
 
 export default defineComponent({
   name: 'App',
   components: {
-    HelloWorld,
+    List,
+    Paginate,
+  },
+  setup() {
+    const items = [...Array(160)].map((_: unknown, i: number) => i);
+    provide(PaginationKey, usePagination(items));
   },
 });
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
